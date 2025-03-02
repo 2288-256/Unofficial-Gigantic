@@ -59,7 +59,7 @@ object MainBar : SideBar("info") {
                 "${ChatColor.WHITE}${player.wrappedExp.setScale(0, RoundingMode.FLOOR).commaSeparated()}"
         }
 
-        map[SideBarRow.THREE] = "${Defaults.SIDEBAR_HIDE_COLOR}_"
+        map[SideBarRow.THREE] = "${Defaults.SIDEBAR_HIDE_COLOR}--------------"
 
         map[SideBarRow.FOUR] = "${ChatColor.GREEN}${ChatColor.BOLD}通常破壊: " +
                 if (info.mineBlockPerMinute >= 1000000000.toBigDecimal()) {
@@ -113,7 +113,7 @@ object MainBar : SideBar("info") {
                 }
         }        
 
-        map[SideBarRow.SEVEN] = "${Defaults.SIDEBAR_HIDE_COLOR}__"
+        map[SideBarRow.SEVEN] = "${Defaults.SIDEBAR_HIDE_COLOR}--- - --- - ---"
 
         if (Achievement.MANA_STONE.isGranted(player)) {
             map[SideBarRow.EIGHT] = "${ChatColor.AQUA}${ChatColor.BOLD}  マナ  : " +
@@ -145,10 +145,10 @@ object MainBar : SideBar("info") {
         }
 
         if (Achievement.MANA_STONE.isGranted(player))
-            map[SideBarRow.TEN] = "${Defaults.SIDEBAR_HIDE_COLOR}___"
+            map[SideBarRow.TEN] = "${Defaults.SIDEBAR_HIDE_COLOR} - - - - - - - - "
 
         map[SideBarRow.ELEVEN] = "${ChatColor.YELLOW}" +
-                "  seichi-haru.pgw.jp  "
+                "    seichi-haru.pgw.jp  "
 
         return map
     }
