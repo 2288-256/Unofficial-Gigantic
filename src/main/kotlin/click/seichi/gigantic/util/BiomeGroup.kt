@@ -71,7 +71,8 @@ enum class BiomeGroup(
             Biome.RIVER,
             Biome.BEACH,
             Biome.MUSHROOM_FIELDS,
-            Biome.MUSHROOM_FIELD_SHORE
+            Biome.MUSHROOM_FIELD_SHORE,
+            Biome.WOODED_HILLS
     ),
     DRY(
             LocalizedText(
