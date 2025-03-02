@@ -42,7 +42,10 @@ val FORESTS = setOf(
         Biome.JUNGLE_EDGE,
         Biome.JUNGLE_HILLS,
         Biome.MODIFIED_JUNGLE_EDGE,
-        Biome.MODIFIED_JUNGLE
+        Biome.MODIFIED_JUNGLE,
+        Biome.BAMBOO_JUNGLE,
+        Biome.BAMBOO_JUNGLE_HILLS,
+        Biome.WOODED_HILLS
 )
 
 val HILLS = setOf(
@@ -56,7 +59,8 @@ val HILLS = setOf(
         Biome.SWAMP_HILLS,
         Biome.TAIGA_HILLS,
         Biome.TALL_BIRCH_HILLS,
-        Biome.WOODED_HILLS
+        Biome.WOODED_HILLS,
+        Biome.BAMBOO_JUNGLE_HILLS
 )
 
 val Biome.isOcean: Boolean
