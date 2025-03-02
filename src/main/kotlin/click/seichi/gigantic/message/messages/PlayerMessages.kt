@@ -193,7 +193,7 @@ object PlayerMessages {
                 LocalizedText(
                         Locale.JAPANESE.let {
                             it to "${ChatColor.WHITE}" +
-                                    "=====" +
+                                    "======" +
                                     "${ChatColor.LIGHT_PURPLE}${ChatColor.BOLD}" +
                                     "非公式整地鯖(春)" +
                                     "${ChatColor.WHITE}" +
