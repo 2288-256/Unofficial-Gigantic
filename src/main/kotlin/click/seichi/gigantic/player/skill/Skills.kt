@@ -48,9 +48,7 @@ object Skills {
                     p.addPotionEffect(PotionEffect(PotionEffectType.FAST_DIGGING, 100, 2, true, false))
                     SkillSounds.MINE_BURST_ON_FIRE.play(player.eyeLocation)
                     p.updateBelt(true, false)
-                    // Toolを持った後、マナストーンの切り替え処理が発生する為、マナストーンの状態を反転させておく
-                    p.offer(Keys.SPELL_TOGGLE, !p.getOrPut(Keys.SPELL_TOGGLE));
-                    p.fixHandToTool()
+                    p.fixHandToTool(player)
                 }.onFire {
                     if (!p.isValid) return@onFire
                     p.updateBelt(false, false)
