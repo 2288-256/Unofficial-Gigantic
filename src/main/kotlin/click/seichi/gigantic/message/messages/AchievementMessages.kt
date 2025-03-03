@@ -34,6 +34,23 @@ object AchievementMessages {
                 ))
     }
 
+    val ALL_PARTNER = { player: Player ->
+        ChatMessage(ChatMessageProtocol.CHAT,
+                LocalizedText(
+                        Locale.JAPANESE to "${ChatColor.WHITE}${ChatColor.BOLD}" +
+                                "【速報】" +
+                                "${ChatColor.YELLOW}" +
+                                "${player.name}さん" +
+                                "${ChatColor.WHITE}" +
+                                "が" +
+                                "${ChatColor.LIGHT_PURPLE}" +
+                                " 全ての意思との関係を神友にする " +
+                                "${ChatColor.WHITE}" +
+                                "を達成しました。" +
+                                "おめでとうございます!"
+                ))
+    }
+
     val FIRST_JOIN = LinedChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
             Locale.JAPANESE to "${ChatColor.AQUA}" +
                     "ブロックを壊そう" +
