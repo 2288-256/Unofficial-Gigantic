@@ -44,7 +44,8 @@ val FORESTS = setOf(
         Biome.MODIFIED_JUNGLE_EDGE,
         Biome.MODIFIED_JUNGLE,
         Biome.BAMBOO_JUNGLE,
-        Biome.BAMBOO_JUNGLE_HILLS
+        Biome.BAMBOO_JUNGLE_HILLS,
+        Biome.WOODED_HILLS
 )
 
 val HILLS = setOf(
