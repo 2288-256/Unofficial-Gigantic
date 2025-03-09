@@ -10,6 +10,7 @@ import click.seichi.gigantic.message.messages.menu.MissionMenuMessages
 import click.seichi.gigantic.mission.Mission
 import click.seichi.gigantic.mission.MissionClient
 import click.seichi.gigantic.relic.Relic
+import click.seichi.gigantic.sidebar.bars.EthelLogger
 import click.seichi.gigantic.util.Random
 import click.seichi.gigantic.will.Will
 import click.seichi.gigantic.will.WillGrade
@@ -74,6 +75,7 @@ object MissionButtons {
                     .toSet()
                 getEthel.forEach {
                     it.addEthel(player, rewardAmount.toLong())
+                    EthelLogger.add(player, it, rewardAmount.toLong())
                     player.sendMessage(
                         MissionMessages.MISSION_REWARD_GET_ETHEL_ONE(it, rewardAmount).asSafety(player.wrappedLocale)
                     )
