@@ -73,6 +73,7 @@ enum class BiomeGroup(
             Biome.MUSHROOM_FIELDS,
             Biome.MUSHROOM_FIELD_SHORE,
             Biome.BAMBOO_JUNGLE,
+            Biome.BAMBOO_JUNGLE_HILLS,
             Biome.WOODED_HILLS
     ),
     DRY(
