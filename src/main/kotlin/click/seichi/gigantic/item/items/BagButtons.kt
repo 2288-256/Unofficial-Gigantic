@@ -720,4 +720,22 @@ object BagButtons {
         }
 
     }
+
+    val MONSTER_BOOK = object : Button {
+
+        override fun toShownItemStack(player: Player): ItemStack? {
+            return itemStackOf(Material.LECTERN) {
+                setDisplayName("${ChatColor.AQUA}${ChatColor.UNDERLINE}"
+                        + BagMessages.MONSTER_BOOK.asSafety(player.wrappedLocale))
+                clearLore()
+            }
+        }
+
+        override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
+            if (event.inventory.holder === MonsterBookMenu) return false
+            MonsterBookMenu.open(player)
+            return true
+        }
+
+    }
 }

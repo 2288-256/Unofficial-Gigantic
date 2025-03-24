@@ -22,15 +22,37 @@ import kotlin.reflect.full.createInstance
 enum class SoulMonster(
         val id: Int,
         private val head: Head?,
+        val difficultyType: DifficultyType,
         private val localizedName: LocalizedText,
         private val localizedLore: List<LocalizedText>?,
         val color: Color,
         val parameter: SoulMonsterParameter,
         private val aiClass: KClass<SoulMonsterAI>,
-        vararg dropRelic: DropRelic
-) {
 
-    ;
+    enum class DifficultyType(val displayName: LocalizedText, val material: Material) {
+        All(MonsterDifficultyMessages.ALL, Material.DIAMOND_SWORD) {
+            override fun isContain(player: Player, monster: SoulMonster): Boolean {
+                return true
+            }
+        },
+        Easy(MonsterDifficultyMessages.EASY, Material.COAL) {
+            override fun isContain(player: Player, monster: SoulMonster): Boolean {
+                return monster.difficultyType == Easy
+            }
+        },
+        Normal(MonsterDifficultyMessages.NORMAL, Material.IRON_INGOT) {
+            override fun isContain(player: Player, monster: SoulMonster): Boolean {
+                return monster.difficultyType == Normal
+            }
+        },
+        Hard(MonsterDifficultyMessages.HARD, Material.GOLD_INGOT) {
+            override fun isContain(player: Player, monster: SoulMonster): Boolean {
+                return monster.difficultyType == Hard
+            }
+        }
+        ;
+        abstract fun isContain(player: Player, monster: SoulMonster): Boolean
+    }
 
     companion object {
         // 重複確認
@@ -51,6 +73,12 @@ enum class SoulMonster(
 
     fun defeatedBy(player: Player) {
         player.transform(Keys.SOUL_MONSTER[this] ?: return) { it + 1 }
+    }
+
+    fun getBookClient(player: Player): MonsterBookClient? {
+        val monsterBookMap = player.getOrPut(Keys.MONSTER_BOOK_MAP)
+        val monsterKey = this.id
+        return monsterBookMap[monsterKey]
     }
 
     data class DropRelic(

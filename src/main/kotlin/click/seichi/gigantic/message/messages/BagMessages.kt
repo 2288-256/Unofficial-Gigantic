@@ -275,4 +275,9 @@ object BagMessages {
             Locale.JAPANESE to "${ChatColor.GOLD}${ChatColor.BOLD}${ChatColor.UNDERLINE}" +
                     "ミッション"
     )
+
+    val MONSTER_BOOK = LocalizedText(
+        Locale.JAPANESE to "${ChatColor.AQUA}${ChatColor.BOLD}${ChatColor.UNDERLINE}" +
+                "モンスター図鑑"
+    )
 }
