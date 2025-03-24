@@ -128,6 +128,10 @@ class UserEntity(uniqueId: UUID, playerName: String) {
             .find { UserMissionTable.userId eq uniqueId }
             .toList()
 
+    val userMonsterBookList = UserMonsterBook
+            .find { UserMonsterBookTable.userId eq uniqueId }
+            .toList()
+
     val userFollowList = UserFollow
             .find { UserFollowTable.userId eq uniqueId }
             .toList()

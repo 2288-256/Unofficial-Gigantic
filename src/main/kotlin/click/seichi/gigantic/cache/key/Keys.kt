@@ -12,20 +12,14 @@ import click.seichi.gigantic.config.DebugConfig
 import click.seichi.gigantic.config.PlayerLevelConfig
 import click.seichi.gigantic.database.RankingEntity
 import click.seichi.gigantic.database.UserEntity
-import click.seichi.gigantic.database.dao.user.User
-import click.seichi.gigantic.database.dao.user.UserFollow
-import click.seichi.gigantic.database.dao.user.UserHome
-import click.seichi.gigantic.database.dao.user.UserMute
-import click.seichi.gigantic.database.dao.user.UserMission
-import click.seichi.gigantic.database.table.user.UserFollowTable
-import click.seichi.gigantic.database.table.user.UserHomeTable
-import click.seichi.gigantic.database.table.user.UserMissionTable
-import click.seichi.gigantic.database.table.user.UserMuteTable
+import click.seichi.gigantic.database.dao.user.*
+import click.seichi.gigantic.database.table.user.*
 import click.seichi.gigantic.effect.GiganticEffect
 import click.seichi.gigantic.menu.MissionCategory
 import click.seichi.gigantic.menu.RelicCategory
 import click.seichi.gigantic.mission.Mission
 import click.seichi.gigantic.mission.MissionClient
+import click.seichi.gigantic.monster.MonsterBookClient
 import click.seichi.gigantic.monster.SoulMonster
 import click.seichi.gigantic.player.*
 import click.seichi.gigantic.quest.Quest
@@ -992,6 +986,15 @@ object Keys {
         }
     }
 
+    val MENU_MONSTERBOOK_CATEGORY = object : Key<PlayerCache, SoulMonster.DifficultyType> {
+        override val default: SoulMonster.DifficultyType
+            get() = SoulMonster.DifficultyType.All
+
+        override fun satisfyWith(value: SoulMonster.DifficultyType): Boolean {
+            return true
+        }
+    }
+
     val WILL_RELATIONSHIP_MAP: Map<Will, Key<PlayerCache, WillRelationship>> = Will.values().map { will ->
         will to
                 object : Key<PlayerCache, WillRelationship> {
@@ -1218,6 +1221,40 @@ object Keys {
         }
     }
 
+    val MONSTER_BOOK_MAP = object : DatabaseKey<PlayerCache, Map<Int, MonsterBookClient>, UserEntity>{
+        override val default: Map<Int, MonsterBookClient>
+            get() = mapOf()
+
+        override fun read(entity: UserEntity): Map<Int, MonsterBookClient> {
+            val userMonsterBookList = entity.userMonsterBookList
+            return userMonsterBookList.map {
+                it.monsterId to MonsterBookClient(
+                    it.monsterId,
+                    it.encounterCount,
+                    it.defeatCount,
+                    it.firstEncounterDate,
+                    it.isEligible
+                )
+            }.toMap()
+        }
+        override fun store(entity: UserEntity, value: Map<Int, MonsterBookClient>) {
+            UserMonsterBookTable.deleteWhere { (UserMonsterBookTable.userId eq entity.user.id.value) }
+            value.forEach { (monsterId, monsterBook) ->
+                UserMonsterBook.new {
+                    this.user = entity.user
+                    this.monsterId = monsterId
+                    this.encounterCount = monsterBook.encounterCount
+                    this.defeatCount = monsterBook.defeatCount
+                    this.firstEncounterDate = monsterBook.firstEncounterDate
+                    this.isEligible = monsterBook.isEligible
+                }
+            }
+        }
+        override fun satisfyWith(value: Map<Int, MonsterBookClient>): Boolean {
+            return true
+        }
+    }
+
     val TITLE = object : Key<PlayerCache, String?> {
         override val default: String?
             get() = null
@@ -1259,6 +1296,15 @@ object Keys {
             get() = listOf()
 
         override fun satisfyWith(value: List<Mission>): Boolean {
+            return true
+        }
+    }
+
+    val MENU_MONSTERBOOK_LIST = object : Key<PlayerCache, List<SoulMonster>> {
+        override val default: List<SoulMonster>
+            get() = listOf()
+
+        override fun satisfyWith(value: List<SoulMonster>): Boolean {
             return true
         }
     }
