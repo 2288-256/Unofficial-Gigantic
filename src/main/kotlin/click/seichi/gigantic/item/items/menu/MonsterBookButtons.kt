@@ -52,7 +52,7 @@ object MonsterBookButtons {
                         }
                         setDisplayName(monster.getName(locale))
                         clearLore()
-                        if (client.isEligible){
+                        if (client.isAffinity){
                             addLore("${ChatColor.GREEN}${ChatColor.BOLD}" + MonsterBookMenuMessages.AFFINITY.asSafety(locale))
                         }else{
                             addLore("${ChatColor.RED}${ChatColor.BOLD}" + MonsterBookMenuMessages.NO_ADDINITY.asSafety(locale))

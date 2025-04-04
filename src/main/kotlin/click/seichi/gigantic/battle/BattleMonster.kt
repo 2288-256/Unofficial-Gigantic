@@ -390,7 +390,7 @@ class BattleMonster(
             encounterCount = 0,
             defeatCount = 0,
             firstEncounterDate = DateTime.now(),
-            isEligible = false
+            isAffinity = false
         )
         player.transform(Keys.MONSTER_BOOK_MAP) {
             it.toMutableMap().apply {
@@ -417,7 +417,7 @@ class BattleMonster(
                 isChanged = true
             }
             if (client.encounterCount >= affinityCountdown) {
-                client.isEligible = true
+                client.isAffinity = true
                 isChanged = true
             }
             if (isChanged) {

@@ -10,5 +10,5 @@ class MonsterBookClient (
     var encounterCount: Long,
     var defeatCount: Long,
     var firstEncounterDate: DateTime,
-    var isEligible: Boolean
+    var isAffinity: Boolean
 )

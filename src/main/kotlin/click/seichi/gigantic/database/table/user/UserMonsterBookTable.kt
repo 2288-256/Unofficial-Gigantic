@@ -17,5 +17,5 @@ object UserMonsterBookTable : IntIdTable("users_monster_books") {
 
     val firstEncounterDate = datetime("first_encounter_date")
 
-    val isEligible = bool("is_eligible").default(false)
+    val isAffinity = bool("is_eligible").default(false)
 }

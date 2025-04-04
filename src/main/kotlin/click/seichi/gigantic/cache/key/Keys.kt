@@ -1233,7 +1233,7 @@ object Keys {
                     it.encounterCount,
                     it.defeatCount,
                     it.firstEncounterDate,
-                    it.isEligible
+                    it.isAffinity
                 )
             }.toMap()
         }
@@ -1246,7 +1246,7 @@ object Keys {
                     this.encounterCount = monsterBook.encounterCount
                     this.defeatCount = monsterBook.defeatCount
                     this.firstEncounterDate = monsterBook.firstEncounterDate
-                    this.isEligible = monsterBook.isEligible
+                    this.isAffinity = monsterBook.isAffinity
                 }
             }
         }

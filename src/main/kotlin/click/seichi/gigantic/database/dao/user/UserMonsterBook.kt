@@ -21,5 +21,5 @@ class UserMonsterBook(id: EntityID<Int>) : IntEntity(id) {
 
     var firstEncounterDate by UserMonsterBookTable.firstEncounterDate
 
-    var isEligible by UserMonsterBookTable.isEligible
+    var isAffinity by UserMonsterBookTable.isAffinity
 }
