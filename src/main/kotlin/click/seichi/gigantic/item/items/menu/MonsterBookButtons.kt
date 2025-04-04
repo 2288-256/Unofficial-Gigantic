@@ -43,19 +43,25 @@ object MonsterBookButtons {
                 val locale = player.wrappedLocale
                 if (client != null) {
                     return monster.getIcon().apply {
+                        val formatter = java.text.DecimalFormat("0.##")
                         val defeatRate = if (client.encounterCount > 0) {
                             val rate = client.defeatCount.toDouble() / client.encounterCount.toDouble() * 100.0
-                            val formatter = java.text.DecimalFormat("0.##")
                             "${formatter.format(rate)}%"
                         } else {
                             "0%"
+                        }
+                        val affinityRate = if(!client.isAffinity){
+                            val rate = client.defeatCount.toDouble() / monster.difficultyType.affinityCount.toDouble() * 100.0
+                            " (${formatter.format(rate)}%)"
+                        } else {
+                            ""
                         }
                         setDisplayName(monster.getName(locale))
                         clearLore()
                         if (client.isAffinity){
                             addLore("${ChatColor.GREEN}${ChatColor.BOLD}" + MonsterBookMenuMessages.AFFINITY.asSafety(locale))
                         }else{
-                            addLore("${ChatColor.RED}${ChatColor.BOLD}" + MonsterBookMenuMessages.NO_ADDINITY.asSafety(locale))
+                            addLore("${ChatColor.RED}${ChatColor.BOLD}" + MonsterBookMenuMessages.NO_ADDINITY.asSafety(locale) + ChatColor.GRAY + affinityRate)
                         }
                         addLore("${ChatColor.WHITE}${ChatColor.BOLD}" + MonsterBookMenuMessages.DEFEAT_STATUS.asSafety(locale))
                         addLore("${ChatColor.GRAY}" + MonsterBookMenuMessages.ENCOUNT_COUNT.asSafety(locale) + "${ChatColor.WHITE}${client.encounterCount}")
