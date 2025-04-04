@@ -61,7 +61,7 @@ object MonsterBookButtons {
                         addLore("${ChatColor.GRAY}" + MonsterBookMenuMessages.ENCOUNT_COUNT.asSafety(locale) + "${ChatColor.WHITE}${client.encounterCount}")
                         addLore("${ChatColor.GRAY}" + MonsterBookMenuMessages.DEFEAT_COUNT.asSafety(locale) + "${ChatColor.WHITE}${client.defeatCount}")
                         addLore("${ChatColor.GRAY}" + MonsterBookMenuMessages.DEFEAT_RATE.asSafety(locale) + "${ChatColor.WHITE}$defeatRate")
-                        addLore("${ChatColor.GRAY}" + MonsterBookMenuMessages.FIRST_ENCOUNT_DATE.asSafety(locale) + client.firstEncounterDate.toString("yyyy/MM/dd kk:mm:ss"))
+                        addLore("${ChatColor.GRAY}" + MonsterBookMenuMessages.FIRST_ENCOUNT_DATE.asSafety(locale) + "${ChatColor.WHITE}" + client.firstEncounterDate.toString("yyyy/MM/dd kk:mm:ss"))
                         addLore("${ChatColor.DARK_GRAY}ID:${monster.id}")
                     }
                 }else{
