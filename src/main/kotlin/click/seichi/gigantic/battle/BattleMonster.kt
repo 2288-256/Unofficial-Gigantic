@@ -2,8 +2,10 @@ package click.seichi.gigantic.battle
 
 import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.animation.animations.BattleMonsterAnimations
+import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.message.messages.BattleMessages
+import click.seichi.gigantic.monster.MonsterBookClient
 import click.seichi.gigantic.monster.SoulMonster
 import click.seichi.gigantic.monster.ai.AttackBlock
 import click.seichi.gigantic.monster.ai.SoulMonsterState
@@ -19,6 +21,7 @@ import org.bukkit.entity.Player
 import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
 import org.bukkit.util.EulerAngle
+import org.joda.time.DateTime
 
 /**
  * @author tar0ss
@@ -109,7 +112,14 @@ class BattleMonster(
                 this.setHelmet(monster.getIcon())
             }
         }
-        players.forEach { bossBar.addPlayer(it.player) }
+        players.forEach {
+            bossBar.addPlayer(it.player)
+
+            val client = monster.getBookClient(it.player)
+            if (client == null) {
+                createMonsterBookElement(it.player)
+            }
+        }
         BattleBars.AWAKE(monster.parameter.health, monster, locale).show(bossBar)
 
         players.map { it.player }.forEach { player ->
@@ -132,7 +142,9 @@ class BattleMonster(
             }
         }
         updateLocation()
-        MonsterSpiritAnimations.AMBIENT(monster.color).start(entity.eyeLocation)
+        //エフェクト処理が重いため
+        // ToDo: 設定項目として設けるべき？
+        //MonsterSpiritAnimations.AMBIENT(monster.color).start(entity.eyeLocation)
     }
 
     private fun updateLocation() {
@@ -351,7 +363,70 @@ class BattleMonster(
         }
         return trueDamage
     }
-    fun win(){
-        BattleMonsterAnimations.WIN_PARTICLE.start(eyeLocation)
+    fun win(players: Set<BattlePlayer>){
+        players.forEach {
+            val player = it.player
+            BattleMonsterAnimations.WIN_PARTICLE.start(eyeLocation)
+            val client = monster.getBookClient(player)
+            if (client != null) {
+                updateMonserBookElement(monster, player, true, true)
+            } else {
+                severe("MonsterBookClient is not found")
+            }
+        }
+    }
+    fun lose(player: Player){
+        val client = monster.getBookClient(player)
+        if (client != null) {
+            updateMonserBookElement(monster, player, true, false)
+        }else{
+            severe("MonsterBookClient is not found")
+        }
+    }
+
+    private fun createMonsterBookElement(player: Player) {
+        val newMonsterBook = MonsterBookClient(
+            monsterId = monster.id,
+            encounterCount = 0,
+            defeatCount = 0,
+            firstEncounterDate = DateTime.now(),
+            isEligible = false
+        )
+        player.transform(Keys.MONSTER_BOOK_MAP) {
+            it.toMutableMap().apply {
+                put(newMonsterBook.monsterId, newMonsterBook)
+            }
+        }
+    }
+    private fun updateMonserBookElement(monster: SoulMonster, player: Player, encount: Boolean, win: Boolean){
+        val client = player.getOrPut(Keys.MONSTER_BOOK_MAP).values.firstOrNull { it.monsterId == monster.id }
+        val affinityCountdown = when(monster.difficultyType){
+            SoulMonster.DifficultyType.Easy -> 3
+            SoulMonster.DifficultyType.Normal -> 5
+            SoulMonster.DifficultyType.Hard -> 7
+            else -> {return severe("DifficultyType is not defined")}
+        }
+        var isChanged = false
+        if (client != null) {
+            if (encount) {
+                client.encounterCount++
+                isChanged = true
+            }
+            if (win) {
+                client.defeatCount++
+                isChanged = true
+            }
+            if (client.encounterCount >= affinityCountdown) {
+                client.isEligible = true
+                isChanged = true
+            }
+            if (isChanged) {
+                player.transform(Keys.MONSTER_BOOK_MAP) {
+                    it.toMutableMap().apply {
+                        put(client.monsterId, client)
+                    }
+                }
+            }
+        }
     }
 }
