@@ -7,6 +7,7 @@ import click.seichi.gigantic.item.items.menu.MonsterBookButtons
 import click.seichi.gigantic.item.items.menu.NextButton
 import click.seichi.gigantic.item.items.menu.PrevButton
 import click.seichi.gigantic.menu.BookMenu
+import click.seichi.gigantic.message.messages.menu.MonsterBookMenuMessages
 import click.seichi.gigantic.monster.SoulMonster
 import org.bukkit.entity.Player
 import org.bukkit.inventory.Inventory
