@@ -73,6 +73,7 @@ class Battle internal constructor(
     }
 
     fun update() {
+        if (battleSpawner.player.isDead) lose(battleSpawner.player)
         getJoinedPlayers().forEach {
             if (!it.player.isValid || it.player.gameMode != GameMode.SURVIVAL) {
                 leave(it)
@@ -82,7 +83,6 @@ class Battle internal constructor(
             !battleSpawner.player.isValid
                     || battlers.isEmpty()
                     || enemy.state == SoulMonsterState.DISAPPEAR -> end()
-            battleSpawner.player.isDead -> lose()
             enemy.state == SoulMonsterState.DEATH -> win()
         }
         enemy.update(elapsedTick)
@@ -112,6 +112,7 @@ class Battle internal constructor(
     }
 
     private fun win() {
+        enemy.win(getJoinedPlayers())
         battlers.forEach {
             BattleSounds.WIN.play(it.player.location)
             BattleMessages.WIN(monster).sendTo(it.player)
@@ -129,7 +130,8 @@ class Battle internal constructor(
         end()
     }
 
-    private fun lose() {
+    private fun lose(player: Player) {
+        enemy.lose(player)
         end()
     }
 
