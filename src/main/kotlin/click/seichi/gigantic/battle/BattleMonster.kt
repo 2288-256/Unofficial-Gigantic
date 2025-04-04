@@ -400,12 +400,6 @@ class BattleMonster(
     }
     private fun updateMonserBookElement(monster: SoulMonster, player: Player, encount: Boolean, win: Boolean){
         val client = player.getOrPut(Keys.MONSTER_BOOK_MAP).values.firstOrNull { it.monsterId == monster.id }
-        val affinityCountdown = when(monster.difficultyType){
-            SoulMonster.DifficultyType.Easy -> 3
-            SoulMonster.DifficultyType.Normal -> 5
-            SoulMonster.DifficultyType.Hard -> 7
-            else -> {return severe("DifficultyType is not defined")}
-        }
         var isChanged = false
         if (client != null) {
             if (encount) {
@@ -416,7 +410,7 @@ class BattleMonster(
                 client.defeatCount++
                 isChanged = true
             }
-            if (client.encounterCount >= affinityCountdown) {
+            if (client.defeatCount >= monster.difficultyType.affinityCount) {
                 client.isAffinity = true
                 isChanged = true
             }
