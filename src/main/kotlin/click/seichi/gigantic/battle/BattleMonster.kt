@@ -127,6 +127,11 @@ class BattleMonster(
 //            if (!SoulMonster.VILLAGER.isDefeatedBy(player)) {
             BattleMessages.FIRST_AWAKE.sendTo(player)
 //            }
+            val battleSpawner = players.find { it.isSpawner }!!
+            val isAffinity = monster.getBookClient(battleSpawner.player)?.isAffinity
+            if (isAffinity == false){
+                BattleMessages.NO_AFFINITY.sendTo(player)
+            }
         }
 
         state = SoulMonsterState.MOVE

@@ -66,5 +66,7 @@ object BattleMessages {
                     Locale.JAPANESE to "F3+Gでチャンクの境界を表示"
             ), 0, 60, 10)
 
-
+    val NO_AFFINITY = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
+            Locale.JAPANESE to "${ChatColor.DARK_RED}適性がないのでデバフがかかった！"
+    ))
 }

@@ -77,6 +77,11 @@ object PlayerMessages {
                     "マナが足りません"
     ))
 
+    val SKILL_DEBUFF_CANCEL = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
+            Locale.JAPANESE to "${ChatColor.RED}" +
+                    "デバフで発動できない！"
+    ))
+
 
     val MANA_DISPLAY = { mana: BigDecimal, maxMana: BigDecimal ->
         val interval = maxMana.divide(20.toBigDecimal(), 10, RoundingMode.HALF_UP)

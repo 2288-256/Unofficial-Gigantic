@@ -18,6 +18,7 @@ import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.event.block.Action
 import org.bukkit.event.player.PlayerInteractEvent
+import org.bukkit.inventory.EquipmentSlot
 import org.bukkit.inventory.ItemFlag
 import org.bukkit.inventory.ItemStack
 import java.util.*
@@ -211,6 +212,13 @@ object HandItems {
         }
 
         override fun tryInteract(player: Player, event: PlayerInteractEvent): Boolean {
+            val battle = player.findBattle()
+            val isAffinity = battle?.monster?.getBookClient(player)?.isAffinity
+            if (event.hand == EquipmentSlot.OFF_HAND) return false
+            if (battle != null && isAffinity == false){
+                PlayerMessages.SKILL_DEBUFF_CANCEL.sendTo(player)
+                return false
+            }
             Skill.MINE_BURST.tryCast(player)
             return true
         }
@@ -239,6 +247,7 @@ object HandItems {
         }
 
         override fun tryInteract(player: Player, event: PlayerInteractEvent): Boolean {
+            PlayerMessages.SKILL_DEBUFF_CANCEL.sendTo(player)
             Skill.FLASH.tryCast(player)
             return true
         }

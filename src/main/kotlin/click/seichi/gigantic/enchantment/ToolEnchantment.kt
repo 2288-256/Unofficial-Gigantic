@@ -24,6 +24,11 @@ enum class ToolEnchantment(
         }
 
         override fun calcLevel(player: Player, itemStack: ItemStack): Int {
+            val battle = player.findBattle()
+            val isAffinity = battle?.monster?.getBookClient(player)?.isAffinity
+            if (battle != null && isAffinity == false){
+                return 0
+            }
             val mineBurst = player.getOrPut(Keys.SKILL_MINE_BURST)
             return if (mineBurst.duringFire()) {
                 10
