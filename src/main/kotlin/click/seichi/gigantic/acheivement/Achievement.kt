@@ -16,6 +16,7 @@ import click.seichi.gigantic.sound.sounds.PlayerSounds
 import click.seichi.gigantic.tool.Tool
 import click.seichi.gigantic.will.Will
 import click.seichi.gigantic.will.WillGrade
+import click.seichi.gigantic.will.WillRelationship
 import org.bukkit.entity.Player
 
 /**
@@ -65,7 +66,12 @@ enum class Achievement(
     FIRST_PRE_SENSE(6, {
         Will.values().firstOrNull { will -> it.isProcessed(will) } != null
     }, grantMessage = AchievementMessages.FIRST_PRE_SENSE),
-
+    //FIXME なぜかログイン時のみしか判定されない。全意思が神友になったときにこのイベントを発火したい
+    ALL_PARTNER(7, {
+        Will.values().all { will -> it.relationship(will) == WillRelationship.PARTNER }
+    }, action = {DiscordWebhookNotifier.sendAllPartnerNotification(it.name)}
+        , broadcastMessage = { AchievementMessages.ALL_PARTNER(it) }
+        , broadcastSound = PlayerSounds.ACHIEVE_TUTORIAL),
     // systems
     MANA_STONE(100,
             {
