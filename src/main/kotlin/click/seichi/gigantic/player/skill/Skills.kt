@@ -48,7 +48,7 @@ object Skills {
                     p.addPotionEffect(PotionEffect(PotionEffectType.FAST_DIGGING, 100, 2, true, false))
                     SkillSounds.MINE_BURST_ON_FIRE.play(player.eyeLocation)
                     p.updateBelt(true, false)
-                    p.fixHandToTool()
+                    p.fixHandToTool(player)
                 }.onFire {
                     if (!p.isValid) return@onFire
                     p.updateBelt(false, false)

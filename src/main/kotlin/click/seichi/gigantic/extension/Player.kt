@@ -274,7 +274,9 @@ fun Player.updateBag() {
     getOrPut(Keys.BAG).carry(this)
 }
 
-fun Player.fixHandToTool() {
+fun Player.fixHandToTool(player: Player) {
+    // Toolを持った後、マナストーンの切り替え処理が発生する為、マナストーンの状態を反転させておく
+    player.offer(Keys.SPELL_TOGGLE, !player.getOrPut(Keys.SPELL_TOGGLE));
     inventory.heldItemSlot = getOrPut(Keys.BELT).toolSlot
 }
 
