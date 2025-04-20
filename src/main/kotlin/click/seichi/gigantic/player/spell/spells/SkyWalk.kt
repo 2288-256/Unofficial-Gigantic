@@ -167,7 +167,7 @@ object SkyWalk : Invokable {
             }
         }
         val additiveSet = prevSet.filter { allSet.contains(it) }.toSet()
-        return allSet.filter { it.isPassable || it.isAir || Tag.FENCES.isTagged(it.type) }
+        return allSet.filter { it.isPassable || it.isAir || Tag.FENCES.isTagged(it.type) || it.type == Material.BAMBOO}
             // 水と溶岩も固めるために除外
 //                    .filterNot { it.isWater || it.isLava }
             .filterNot { it.isSpawnArea }
