@@ -83,7 +83,8 @@ object TeleportButtons {
                     chunk.isBattled -> false
                     chunk.isSpawnArea -> false
                     oceanBiomeSet.contains(location.block.biome) -> false
-                    location.block.getRelative(BlockFace.DOWN, 2).type == Material.BEDROCK -> false
+                    location.block.getRelative(BlockFace.DOWN, 2).type == Material.SMOOTH_STONE -> false
+                    location.y < 5 && location.block.getRelative(BlockFace.DOWN, 2).type == Material.TORCH -> false
                     deathMaterialSet.contains(location.block.getRelative(BlockFace.DOWN, 2).type) -> false
                     else -> true
                 }
