@@ -540,7 +540,7 @@ private fun Block.clearRelativeFloatingBlock() {
 private fun Block.clearFloatingBlock() {
     if (isCrust) return
     if (isLog) return
-    if (type == Material.TORCH) return
+    if (type == Material.TORCH || type == Defaults.SKY_WALK_AIR_MATERIAL) return
     if (y == 0) return
     type = Material.AIR
 }
