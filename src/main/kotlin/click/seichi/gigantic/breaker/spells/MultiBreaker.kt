@@ -177,7 +177,7 @@ class MultiBreaker : SpellCaster {
                 }
             }.filter {
                 // 種類の制約
-                it.isCrust
+                it.isCrustOrExclude
             }.toSet()
         }
     }
