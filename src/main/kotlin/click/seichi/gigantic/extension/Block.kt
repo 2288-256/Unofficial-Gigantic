@@ -284,6 +284,38 @@ val CONDENSED_LAVAS = setOf(
         Material.MAGMA_BLOCK
 )
 
+//スキルで消えるが、重力を受けない
+val EXCLUDE = setOf(
+        Material.OAK_FENCE,
+        Material.BIRCH_FENCE,
+        Material.ACACIA_FENCE,
+        Material.SPRUCE_FENCE,
+        Material.JUNGLE_FENCE,
+        Material.DARK_OAK_FENCE,
+        Material.OAK_STAIRS,
+        Material.BIRCH_STAIRS,
+        Material.ACACIA_STAIRS,
+        Material.SPRUCE_STAIRS,
+        Material.JUNGLE_STAIRS,
+        Material.DARK_OAK_STAIRS,
+        Material.OAK_SLAB,
+        Material.BIRCH_SLAB,
+        Material.ACACIA_SLAB,
+        Material.SPRUCE_SLAB,
+        Material.JUNGLE_SLAB,
+        Material.DARK_OAK_SLAB,
+        Material.COBBLESTONE_WALL,
+        Material.ANDESITE_WALL,
+        Material.GRANITE_WALL,
+        Material.DIORITE_WALL,
+        Material.HAY_BLOCK
+)
+
+val CRUSTOREXCLUDE = setOf(
+        *CRUSTS.toTypedArray(),
+        *EXCLUDE.toTypedArray()
+)
+
 // Not contain log blocks
 val Block.isCrust
     get() = CRUSTS.contains(type)
@@ -326,6 +358,9 @@ val Block.isCondensedWaters
 
 val Block.isCondensedLavas
     get() = CONDENSED_LAVAS.contains(type)
+
+val Block.isCrustOrExclude
+    get() =  CRUSTOREXCLUDE.contains(type)
 
 val Block.isSurface
     get() = if (isAir) false
